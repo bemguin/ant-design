@@ -1,10 +1,9 @@
-# 带有图标的
-
-- order: 1
+---
+order: 1
+title: 带有图标的
+---
 
 图标放在文字前面。
-
----
 
 ````jsx
 import { Breadcrumb, Icon } from 'antd';
@@ -22,6 +21,6 @@ ReactDOM.render(
       应用
     </Breadcrumb.Item>
   </Breadcrumb>
-, document.getElementById('components-breadcrumb-demo-withicon'));
+, mountNode);
 ````
 

@@ -1,17 +1,14 @@
-import Collapse from 'rc-collapse';
+import RcCollapse from 'rc-collapse';
 import React from 'react';
-const prefixCls = 'ant-collapse';
 
-class AntCollapse extends React.Component {
+export default class Collapse extends React.Component {
+  static Panel = RcCollapse.Panel;
+
+  static defaultProps = {
+    prefixCls: 'ant-collapse',
+  }
+
   render() {
-    return <Collapse {...this.props} />;
+    return <RcCollapse {...this.props} />;
   }
 }
-
-AntCollapse.defaultProps = {
-  prefixCls: prefixCls
-};
-
-AntCollapse.Panel = Collapse.Panel;
-
-export default AntCollapse;

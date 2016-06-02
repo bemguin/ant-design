@@ -1,15 +1,14 @@
 import React from 'react';
-import Slider from 'rc-slider';
+import RcSlider from 'rc-slider';
 
-export default React.createClass({
-  getDefaultProps() {
-    return {
-      prefixCls: 'ant-slider',
-      tipTransitionName: 'zoom-down'
-    };
-  },
+export default class Slider extends React.Component {
+  static defaultProps = {
+    prefixCls: 'ant-slider',
+    tipTransitionName: 'zoom-down',
+  }
+
   render() {
-    const {isIncluded, marks, index, defaultIndex, ...rest} = this.props;
+    const { isIncluded, marks, index, defaultIndex, ...rest } = this.props;
 
     if (isIncluded !== undefined) {
       // 兼容 `isIncluded`
@@ -37,6 +36,6 @@ export default React.createClass({
       rest.marks = marks;
     }
 
-    return <Slider {...rest} />;
+    return <RcSlider {...rest} />;
   }
-});
+}

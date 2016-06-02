@@ -1,60 +1,58 @@
-# 和外部组件通信
-
-- order: 2
+---
+order: 2
+title: 和外部组件通信
+---
 
 联动 checkbox。
 
----
-
 ````jsx
 import { Checkbox, Button } from 'antd';
-const container = document.getElementById('components-checkbox-demo-controller');
 
 const App = React.createClass({
   getInitialState() {
     return {
       checked: true,
-      disabled: false
+      disabled: false,
     };
   },
   render() {
-    const label = (this.state.checked ? '选中' : '取消') + '-' +
-      (this.state.disabled ? '不可用' : '可用');
-    return <div>
-      <p style={{marginBottom: '20px'}}>
-        <label>
+    const label = `${this.state.checked ? '选中' : '取消'}-${this.state.disabled ? '不可用' : '可用'}`;
+    return (
+      <div>
+        <p style={{ marginBottom: '20px' }}>
           <Checkbox checked={this.state.checked}
             disabled={this.state.disabled}
-            onChange={this.onChange} />
+            onChange={this.onChange}>
             {label}
-        </label>
-      </p>
-      <p>
-        <Button type="primary" size="small"
-          onClick={this.toggleChecked}>
-          {!this.state.checked ? '选中' : '取消'}
-        </Button>
-        <Button style={{marginLeft: '10px'}}
-          type="primary" size="small"
-          onClick={this.toggleDisable}>
-          {!this.state.disabled ? '不可用' : '可用'}
-        </Button>
-      </p>
-    </div>;
+          </Checkbox>
+        </p>
+        <p>
+          <Button type="primary" size="small"
+            onClick={this.toggleChecked}>
+            {!this.state.checked ? '选中' : '取消'}
+          </Button>
+          <Button style={{ marginLeft: '10px' }}
+            type="primary" size="small"
+            onClick={this.toggleDisable}>
+            {!this.state.disabled ? '不可用' : '可用'}
+          </Button>
+        </p>
+      </div>
+    );
   },
-  toggleChecked(e) {
-    this.setState({checked: !this.state.checked});
+  toggleChecked() {
+    this.setState({ checked: !this.state.checked });
   },
-  toggleDisable(e) {
-    this.setState({disabled: !this.state.disabled});
+  toggleDisable() {
+    this.setState({ disabled: !this.state.disabled });
   },
   onChange(e) {
     console.log('checked = ', e.target.checked);
     this.setState({
-      checked: e.target.checked
+      checked: e.target.checked,
     });
-  }
+  },
 });
 
-ReactDOM.render(<App />, container);
+ReactDOM.render(<App />, mountNode);
 ````

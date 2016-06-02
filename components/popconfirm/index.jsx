@@ -1,85 +1,97 @@
 import React from 'react';
-import Tooltip from 'rc-tooltip';
+import Tooltip from '../tooltip';
 import Icon from '../icon';
 import Button from '../button';
+import getPlacements from '../popover/placements';
+
+const placements = getPlacements();
 const prefixCls = 'ant-popover';
+const noop = () => {};
 
-export default React.createClass({
-  getInitialState() {
-    return {
-      visible: false
+export default class Popconfirm extends React.Component {
+  static defaultProps = {
+    transitionName: 'zoom-big',
+    placement: 'top',
+    trigger: 'click',
+    overlayStyle: {},
+    onConfirm: noop,
+    onCancel: noop,
+    onVisibleChange: noop,
+  }
+
+  static contextTypes = {
+    antLocale: React.PropTypes.object,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
     };
-  },
-  getDefaultProps() {
-    return {
-      transitionName: '',
-      placement: 'top',
-      trigger: 'click',
-      overlayStyle: {},
-      onConfirm: function () {
-      },
-      onCancel: function () {
-      }
-    };
-  },
-  confirm() {
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ('visible' in nextProps) {
+      this.setState({ visible: nextProps.visible });
+    }
+  }
+
+  confirm = () => {
+    this.setVisible(false);
     this.props.onConfirm.call(this);
-    this.setState({
-      visible: false
-    });
-  },
-  cancel() {
-    this.props.onCancel.call(this);
-    this.setState({
-      visible: false
-    });
-  },
-  onVisibleChange(v) {
-    this.setState({
-      visible: v
-    });
-  },
-  render() {
-    const overlay = <div>
-      <div className={prefixCls + '-content'}>
-        <p className={prefixCls + '-message'}>
-          <Icon type="exclamation-circle" />
-          {this.props.title}
-        </p>
+  }
 
-        <div className={prefixCls + '-buttons'}>
-          <Button onClick={this.cancel} type="ghost" size="small">取消</Button>
-          <Button onClick={this.confirm} type="primary" size="small">确定</Button>
+  cancel = () => {
+    this.setVisible(false);
+    this.props.onCancel.call(this);
+  }
+
+  onVisibleChange = (visible) => {
+    this.setVisible(visible);
+  }
+
+  setVisible(visible) {
+    if (!('visible' in this.props)) {
+      this.setState({ visible });
+    }
+    this.props.onVisibleChange(visible);
+  }
+
+  render() {
+    const { title, placement, overlayStyle, trigger, ...restProps } = this.props;
+    let { okText, cancelText } = this.props;
+    if (this.context.antLocale && this.context.antLocale.Popconfirm) {
+      okText = okText || this.context.antLocale.Popconfirm.okText;
+      cancelText = cancelText || this.context.antLocale.Popconfirm.cancelText;
+    }
+    const overlay = (
+      <div>
+        <div className={`${prefixCls}-inner-content`}>
+          <div className={`${prefixCls}-message`}>
+            <Icon type="exclamation-circle" />
+            <div className={`${prefixCls}-message-title`}>{title}</div>
+          </div>
+          <div className={`${prefixCls}-buttons`}>
+            <Button onClick={this.cancel} type="ghost" size="small">{cancelText || '取消'}</Button>
+            <Button onClick={this.confirm} type="primary" size="small">{okText || '确定'}</Button>
+          </div>
         </div>
       </div>
-    </div>;
-
-    const transitionName = ({
-      top: 'zoom-down',
-      bottom: 'zoom-up',
-      left: 'zoom-right',
-      right: 'zoom-left',
-      topLeft: 'zoom-down',
-      bottomLeft: 'zoom-up',
-      leftTop: 'zoom-right',
-      rightTop: 'zoom-left',
-      topRight: 'zoom-down',
-      bottomRight: 'zoom-up',
-      leftBottom: 'zoom-right',
-      rightBottom: 'zoom-left',
-    })[this.props.placement];
+    );
 
     return (
-      <Tooltip placement={this.props.placement}
-               overlayStyle={this.props.overlayStyle}
-               prefixCls={prefixCls}
-               onVisibleChange={this.onVisibleChange}
-               transitionName={transitionName}
-               visible={this.state.visible}
-               trigger={this.props.trigger}
-               overlay={overlay}>
+      <Tooltip {...restProps}
+        placement={placement}
+        builtinPlacements={placements}
+        overlayStyle={overlayStyle}
+        prefixCls={prefixCls}
+        onVisibleChange={this.onVisibleChange}
+        transitionName={this.props.transitionName}
+        visible={this.state.visible}
+        trigger={trigger}
+        overlay={overlay}>
         {this.props.children}
       </Tooltip>
     );
   }
-});
+}

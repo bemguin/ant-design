@@ -1,10 +1,9 @@
-# 讨嫌的小红点
-
-- order: 3
+---
+order: 3
+title: 讨嫌的小红点
+---
 
 没有具体的数字。
-
----
 
 ````jsx
 import { Badge, Icon } from 'antd';
@@ -16,7 +15,7 @@ ReactDOM.render(<div>
   <Badge dot>
     <a href="#">一个链接</a>
   </Badge>
-</div>, document.getElementById('components-badge-demo-dot'));
+</div>, mountNode);
 ````
 
 <style>

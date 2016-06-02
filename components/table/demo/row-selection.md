@@ -1,10 +1,9 @@
-# 选择
-
-- order: 1
-
-第一列是联动的选择框，rowSelection 中配置 `type="radio"` 可设为单选。
-
 ---
+order: 1
+title: 可选择
+---
+
+第一列是联动的选择框。
 
 ````jsx
 import { Table } from 'antd';
@@ -12,43 +11,46 @@ import { Table } from 'antd';
 const columns = [{
   title: '姓名',
   dataIndex: 'name',
-  render: function(text) {
+  render(text) {
     return <a href="#">{text}</a>;
-  }
+  },
 }, {
   title: '年龄',
-  dataIndex: 'age'
+  dataIndex: 'age',
 }, {
   title: '住址',
-  dataIndex: 'address'
+  dataIndex: 'address',
 }];
 const data = [{
   key: '1',
   name: '胡彦斌',
   age: 32,
-  address: '西湖区湖底公园1号'
+  address: '西湖区湖底公园1号',
 }, {
   key: '2',
   name: '胡彦祖',
   age: 42,
-  address: '西湖区湖底公园1号'
+  address: '西湖区湖底公园1号',
 }, {
   key: '3',
   name: '李大嘴',
   age: 32,
-  address: '西湖区湖底公园1号'
+  address: '西湖区湖底公园1号',
 }];
 
 // 通过 rowSelection 对象表明需要行选择
 const rowSelection = {
-  onSelect: function(record, selected, selectedRows) {
+  onChange(selectedRowKeys, selectedRows) {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  },
+  onSelect(record, selected, selectedRows) {
     console.log(record, selected, selectedRows);
   },
-  onSelectAll: function(selected, selectedRows) {
-    console.log(selected, selectedRows);
-  }
+  onSelectAll(selected, selectedRows, changeRows) {
+    console.log(selected, selectedRows, changeRows);
+  },
 };
 
 ReactDOM.render(<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-, document.getElementById('components-table-demo-row-selection'));
+, mountNode);
 ````

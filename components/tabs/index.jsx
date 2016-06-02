@@ -1,25 +1,85 @@
-import Tabs from 'rc-tabs';
-import React from 'react';
-const prefixCls = 'ant-tabs';
+import RcTabs from 'rc-tabs';
+import React, { cloneElement } from 'react';
+import classNames from 'classnames';
+import Icon from '../icon';
 
-class AntTabs extends React.Component {
+export default class Tabs extends React.Component {
+  static TabPane = RcTabs.TabPane;
+
+  static defaultProps = {
+    prefixCls: 'ant-tabs',
+    animation: 'slide-horizontal',
+    type: 'line', // or 'card' 'editable-card'
+    onChange() {},
+    onEdit() {},
+    hideAdd: false,
+  }
+
+  createNewTab = (targetKey) => {
+    this.props.onEdit(targetKey, 'add');
+  }
+
+  removeTab = (targetKey, e) => {
+    e.stopPropagation();
+    if (!targetKey) {
+      return;
+    }
+    this.props.onEdit(targetKey, 'remove');
+  }
+
+  handleChange = (activeKey) => {
+    this.props.onChange(activeKey);
+  }
+
   render() {
-    let className = (this.props.className || '');
-    if (this.props.size === 'small' || this.props.size === 'mini') {
-      className += ' ' + prefixCls + '-mini';
+    let { prefixCls, size, tabPosition, animation, type,
+          children, tabBarExtraContent, hideAdd } = this.props;
+    let className = classNames({
+      [this.props.className]: !!this.props.className,
+      [`${prefixCls}-mini`]: size === 'small' || size === 'mini',
+      [`${prefixCls}-vertical`]: tabPosition === 'left' || tabPosition === 'right',
+      [`${prefixCls}-card`]: type.indexOf('card') >= 0,
+      [`${prefixCls}-${type}`]: true,
+    });
+    if (tabPosition === 'left' || tabPosition === 'right' || type.indexOf('card') >= 0) {
+      animation = null;
     }
-    if (this.props.tabPosition === 'left' || this.props.tabPosition === 'right') {
-      className += ' ' + prefixCls + '-vertical';
+    // only card type tabs can be added and closed
+    if (type === 'editable-card') {
+      children = children.map((child, index) => {
+        return cloneElement(child, {
+          tab: <div>
+            {child.props.tab}
+            <Icon type="cross" onClick={(e) => this.removeTab(child.key, e)} />
+          </div>,
+          key: child.key || index,
+        });
+      });
+      // Add new tab handler
+      if (!hideAdd) {
+        tabBarExtraContent = (
+          <span>
+            <Icon type="plus" className={`${prefixCls}-new-tab`} onClick={this.createNewTab} />
+            {tabBarExtraContent}
+          </span>
+        );
+      }
     }
-    return <Tabs {...this.props} className={className} />;
+
+    tabBarExtraContent = tabBarExtraContent ? (
+      <div className={`${prefixCls}-extra-content`}>
+        {tabBarExtraContent}
+      </div>
+    ) : null;
+
+    return (
+      <RcTabs {...this.props}
+        className={className}
+        tabBarExtraContent={tabBarExtraContent}
+        onChange={this.handleChange}
+        animation={animation}>
+        {children}
+      </RcTabs>
+    );
   }
 }
-
-AntTabs.defaultProps = {
-  prefixCls: prefixCls,
-  size: 'default'
-};
-
-AntTabs.TabPane = Tabs.TabPane;
-
-export default AntTabs;

@@ -1,41 +1,50 @@
 import React from 'react';
-import Select from 'rc-select';
+import RcSelect, { Option, OptGroup } from 'rc-select';
+import classNames from 'classnames';
 
-let AntSelect = React.createClass({
-  getDefaultProps() {
-    return {
-      prefixCls: 'ant-select',
-      transitionName: 'slide-up',
-      optionLabelProp: 'children',
-      showSearch: false,
-      size: 'default'
-    };
-  },
+export default class Select extends React.Component {
+  static Option = Option;
+  static OptGroup = OptGroup;
+
+  static defaultProps = {
+    prefixCls: 'ant-select',
+    transitionName: 'slide-up',
+    choiceTransitionName: 'zoom',
+    showSearch: false,
+  }
+
+  static contextTypes = {
+    antLocale: React.PropTypes.object,
+  }
+
   render() {
-    const {size, className, combobox, notFoundContent} = this.props;
+    let {
+      size, className, combobox, notFoundContent, prefixCls, showSearch, optionLabelProp,
+    } = this.props;
 
-    let sizeClass = null;
-    if (size === 'large') {
-      sizeClass = 'ant-select-lg';
-    } else if (size === 'small') {
-      sizeClass = 'ant-select-sm';
+    const cls = classNames({
+      [`${prefixCls}-lg`]: size === 'large',
+      [`${prefixCls}-sm`]: size === 'small',
+      [className]: !!className,
+      [`${prefixCls}-show-search`]: showSearch,
+    });
+
+    const { antLocale } = this.context;
+    if (antLocale && antLocale.Select) {
+      notFoundContent = notFoundContent || antLocale.Select.notFoundContent;
     }
 
-    const classNames = [];
+    if (combobox) {
+      notFoundContent = null;
+      // children 带 dom 结构时，无法填入输入框
+      optionLabelProp = optionLabelProp || 'value';
+    }
 
-    if (className) {
-      classNames.push(className);
-    }
-    if (sizeClass) {
-      classNames.push(sizeClass);
-    }
     return (
-      <Select {...this.props} className={classNames.join(' ')} notFoundContent={combobox ? null : notFoundContent} />
+      <RcSelect {...this.props}
+        className={cls}
+        optionLabelProp={optionLabelProp || 'children'}
+        notFoundContent={notFoundContent} />
     );
   }
-});
-
-AntSelect.Option = Select.Option;
-AntSelect.OptGroup = Select.OptGroup;
-
-export default AntSelect;
+}

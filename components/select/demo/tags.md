@@ -1,11 +1,9 @@
-# 标签
-
-- order: 3
-
-tags select，随意输入的内容（scroll the menu）
-
+---
+order: 3
+title: 标签
 ---
 
+tags select，随意输入的内容（scroll the menu）
 
 ````jsx
 import { Select } from 'antd';
@@ -17,15 +15,15 @@ for (let i = 10; i < 36; i++) {
 }
 
 function handleChange(value) {
-  console.log('selected ' + value);
+  console.log(`selected ${value}`);
 }
 
 ReactDOM.render(
-  <Select
-   style={{width: '100%'}}
-   searchPlaceholder="标签模式"
-  tags onChange={handleChange}>
+  <Select tags
+    style={{ width: '100%' }}
+    searchPlaceholder="标签模式"
+    onChange={handleChange}>
     {children}
   </Select>
-, document.getElementById('components-select-demo-tags'));
+, mountNode);
 ````

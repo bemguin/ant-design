@@ -1,30 +1,31 @@
-# 其他元素
-
-- order: 1
+---
+order: 1
+title: 其他元素
+---
 
 分割线和不可用菜单项。
 
----
-
 ````jsx
-import { Menu, Dropdown, Button, Icon } from 'antd';
+import { Menu, Dropdown, Icon } from 'antd';
 
-const menu = <Menu>
-  <Menu.Item key="0">
-    <a target="_blank" href="http://www.alipay.com/">第一个菜单项</a>
-  </Menu.Item>
-  <Menu.Item key="1">
-    <a target="_blank" href="http://www.taobao.com/">第二个菜单项</a>
-  </Menu.Item>
-  <Menu.Divider/>
-  <Menu.Item key="3" disabled>第三个菜单项（不可用）</Menu.Item>
-</Menu>;
+const menu = (
+  <Menu>
+    <Menu.Item key="0">
+      <a target="_blank" href="http://www.alipay.com/">第一个菜单项</a>
+    </Menu.Item>
+    <Menu.Item key="1">
+      <a target="_blank" href="http://www.taobao.com/">第二个菜单项</a>
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="3" disabled>第三个菜单项（不可用）</Menu.Item>
+  </Menu>
+);
 
 ReactDOM.render(
   <Dropdown overlay={menu}>
-    <Button>
+    <a className="ant-dropdown-link" href="#">
       鼠标移入 <Icon type="down" />
-    </Button>
+    </a>
   </Dropdown>
-, document.getElementById('components-dropdown-demo-item'));
+, mountNode);
 ````

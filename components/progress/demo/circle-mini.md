@@ -1,20 +1,18 @@
-# 小型进度圈
-
-- order: 3
+---
+order: 3
+title: 小型进度圈
+---
 
 小一号的圈形进度。
 
----
-
 ````jsx
-import { Progress, Icon } from 'antd';
-const ProgressCircle = Progress.Circle;
+import { Progress } from 'antd';
 
 ReactDOM.render(
   <div>
-    <ProgressCircle percent={30} width={80} />
-    <ProgressCircle percent={70} width={80} status="exception" format={<Icon type="exclamation" />} />
-    <ProgressCircle percent={100} width={80} />
+    <Progress type="circle" percent={30} width={80} />
+    <Progress type="circle" percent={70} width={80} status="exception" />
+    <Progress type="circle" percent={100} width={80} />
   </div>
-  , document.getElementById('components-progress-demo-circle-mini'));
+  , mountNode);
 ````

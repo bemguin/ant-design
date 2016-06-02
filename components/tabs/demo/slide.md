@@ -1,19 +1,16 @@
-# 滑动
-
-- order: 3
+---
+order: 3
+title: 滑动
+---
 
 可以左右滑动，容纳更多标签。
-
----
 
 ````jsx
 import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 
-function callback(key) {}
-
 ReactDOM.render(
-  <Tabs defaultActiveKey="1" onChange={callback}>
+  <Tabs defaultActiveKey="1">
     <TabPane tab="选项一" key="1">选项卡一</TabPane>
     <TabPane tab="选项二" key="2">选项卡二</TabPane>
     <TabPane tab="选项三" key="3">选项卡三</TabPane>
@@ -24,5 +21,5 @@ ReactDOM.render(
     <TabPane tab="选项八" key="8">选项卡八</TabPane>
     <TabPane tab="选项九" key="9">选项卡九</TabPane>
   </Tabs>
-, document.getElementById('components-tabs-demo-slide'));
+, mountNode);
 ````

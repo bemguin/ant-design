@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Ant Design [![](https://img.shields.io/travis/ant-design/ant-design.svg?style=flat-square)](https://travis-ci.org/ant-design/ant-design) [![npm package](https://img.shields.io/npm/v/antd.svg?style=flat-square)](https://www.npmjs.org/package/antd) [![NPM downloads](http://img.shields.io/npm/dm/antd.svg?style=flat-square)](https://npmjs.org/package/antd) [![Join the chat at https://gitter.im/ant-design/ant-design](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ant-design/ant-design?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Ant Design [![](https://img.shields.io/travis/ant-design/ant-design.svg?style=flat-square)](https://travis-ci.org/ant-design/ant-design) [![npm package](https://img.shields.io/npm/v/antd.svg?style=flat-square)](https://www.npmjs.org/package/antd) [![NPM downloads](http://img.shields.io/npm/dm/antd.svg?style=flat-square)](https://npmjs.org/package/antd) [![Dependency Status](https://david-dm.org/ant-design/ant-design.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design) [![Join the chat at https://gitter.im/ant-design/ant-design](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ant-design/ant-design?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 一套企业级的 UI 设计语言和 React 实现。
 
@@ -23,32 +23,40 @@ npm install antd
 
 ## 示例
 
-- 使用全部组件
+```jsx
+import { DatePicker } from 'antd';
+ReactDOM.render(<DatePicker />, mountNode);
+```
 
-  ```jsx
-  import { Datepicker } from 'antd';
-  ReactDOM.render(<Datepicker />, mountNode);
-  ```
+引入样式：
 
-- 按需使用
+```jsx
+import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+```
 
-  ```jsx
-  import 'antd/lib/index.css'; // 只需在页面入口模块引用一次
-  import Datepicker from 'antd/lib/datepicker';
-  ReactDOM.render(<Datepicker />, mountNode);
-  ```
+按需加载可通过此写法 `import DatePicker from 'antd/lib/date-picker'` 或使用插件 [babel-plugin-antd](https://github.com/ant-design/babel-plugin-antd)。
+
 
 ## 浏览器支持
 
 现代浏览器和 IE8 及以上。
 
+> [IE8 issues](https://github.com/xcatliu/react-ie8)
+
+## TypeScript
+
+```js
+///<reference path='./node_modules/antd/type-definitions/antd.d.ts'/>
+...
+```
+
 ## 链接
 
 - [首页](http://ant.design/)
-- [React UI 库](http://ant.design/docs/introduce)
-- [构建调试工具](https://github.com/ant-tool/xtool/)
-- [开发计划](https://github.com/ant-design/ant-design/issues/9)
+- [React 实现](http://ant.design/#/docs/react/introduce)
 - [修改记录](CHANGELOG.md)
+- [开发脚手架](https://github.com/ant-design/antd-init/)
+- [开发工具文档](http://ant-tool.github.io/)
 - [React 组件](http://react-component.github.io/)
 - [React 代码规范](https://github.com/react-component/react-component.github.io/blob/master/docs/zh-cn/component-code-style.md)
 - [组件设计原则](https://github.com/react-component/react-component.github.io/blob/master/docs/zh-cn/component-design.md)

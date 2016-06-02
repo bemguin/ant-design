@@ -1,21 +1,18 @@
-# 基本用法
-
-- order: 0
+---
+order: 0
+title: 基本用法
+---
 
 简单的 checkbox。
 
----
-
 ````jsx
 import { Checkbox } from 'antd';
-const container = document.getElementById('components-checkbox-demo-basic');
 
 function onChange(e) {
-  console.log('checked = ' + e.target.checked);
+  console.log(`checked = ${e.target.checked}`);
 }
 
-ReactDOM.render(<label>
-  <Checkbox defaultChecked={false} onChange={onChange} />
-  Checkbox
-</label>, container);
+ReactDOM.render(
+  <Checkbox defaultChecked={false} onChange={onChange}>Checkbox</Checkbox>
+, mountNode);
 ````

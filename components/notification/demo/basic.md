@@ -1,22 +1,21 @@
-# 基本
-
-- order: 0
-
-最简单的用法，五秒后自动关闭。
-
 ---
+order: 0
+title: 基本
+---
+
+最简单的用法，4.5 秒后自动关闭。
 
 ````jsx
 import { Button, notification } from 'antd';
 
-const openNotification = function() {
+const openNotification = function () {
   notification.open({
     message: '这是标题',
-    description: '这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案'
+    description: '这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案这是提示框的文案',
   });
 };
 
 ReactDOM.render(
   <Button type="primary" onClick={openNotification}>打开通知提醒框</Button>
-, document.getElementById('components-notification-demo-basic'));
+, mountNode);
 ````

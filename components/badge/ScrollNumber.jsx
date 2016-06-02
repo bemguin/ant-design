@@ -1,19 +1,46 @@
 import React, { createElement } from 'react';
-import assign from 'object-assign';
-import { isCssAnimationSupported } from 'css-animation';
+import { findDOMNode } from 'react-dom';
+import isCssAnimationSupported from '../_util/isCssAnimationSupported';
 
 function getNumberArray(num) {
   return num ?
-    num.toString().split('').reverse().map(i => Number(i)) : [];
+    num.toString()
+      .split('')
+      .reverse()
+      .map(i => Number(i)) : [];
 }
 
-class AntScrollNumber extends React.Component {
+export default class ScrollNumber extends React.Component {
+  static defaultProps = {
+    prefixCls: 'ant-scroll-number',
+    count: null,
+    component: 'sup',
+    onAnimated() {},
+    height: 18,
+  }
+
+  static propTypes = {
+    count: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
+    component: React.PropTypes.string,
+    onAnimated: React.PropTypes.func,
+    height: React.PropTypes.number,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       animateStarted: true,
-      count: props.count
+      count: props.count,
     };
+  }
+
+  componentDidMount() {
+    if (!isCssAnimationSupported()) {
+      findDOMNode(this).className += ' not-support-css-animation';
+    }
   }
 
   getPositionByNum(num, i) {
@@ -26,21 +53,18 @@ class AntScrollNumber extends React.Component {
     if (this.state.count > this.lastCount) {
       if (currentDigit >= lastDigit) {
         return 10 + num;
-      } else {
-        return 20 + num;
       }
-    } else {
-      if (currentDigit <= lastDigit) {
-        return 10 + num;
-      } else {
-        return num;
-      }
+      return 20 + num;
     }
+    if (currentDigit <= lastDigit) {
+      return 10 + num;
+    }
+    return num;
   }
 
   componentWillReceiveProps(nextProps) {
-    if ('count' in nextProps && nextProps.count) {
-      if (this.lastCount === this.state.count) {
+    if ('count' in nextProps) {
+      if (this.state.count === nextProps.count) {
         return;
       }
       this.lastCount = this.state.count;
@@ -62,10 +86,11 @@ class AntScrollNumber extends React.Component {
     }
   }
 
-  renderNumberList() {
+  renderNumberList(position) {
     const childrenToReturn = [];
     for (let i = 0; i < 30; i++) {
-      childrenToReturn.push(<p key={i}>{i % 10}</p>);
+      const currentClassName = (position === i) ? 'current' : null;
+      childrenToReturn.push(<p key={i} className={currentClassName}>{i % 10}</p>);
     }
     return childrenToReturn;
   }
@@ -79,11 +104,12 @@ class AntScrollNumber extends React.Component {
       className: `${this.props.prefixCls}-only`,
       style: {
         transition: removeTransition && 'none',
-        transform: 'translate3d(0, ' + (-position * height) + 'px, 0)',
-        height: height,
+        WebkitTransform: `translate3d(0, ${-position * height}px, 0)`,
+        transform: `translate3d(0, ${-position * height}px, 0)`,
+        height,
       },
       key: i,
-    }, this.renderNumberList());
+    }, this.renderNumberList(position));
   }
 
   renderNumberElement() {
@@ -96,42 +122,14 @@ class AntScrollNumber extends React.Component {
   }
 
   render() {
-    const props = assign({}, this.props, {
-      className: `${this.props.prefixCls} ${this.props.className}`
-    });
-    const isBrowser = (typeof document !== 'undefined' && typeof window !== 'undefined');
-    if (isBrowser && isCssAnimationSupported) {
-      return createElement(
-        this.props.component,
-        props,
-        this.renderNumberElement()
-      );
-    } else {
-      return createElement(
-        this.props.component,
-        props,
-        props.count
-      );
-    }
+    const props = {
+      ...this.props,
+      className: `${this.props.prefixCls} ${this.props.className}`,
+    };
+    return createElement(
+      this.props.component,
+      props,
+      this.renderNumberElement()
+    );
   }
 }
-
-AntScrollNumber.defaultProps = {
-  prefixCls: 'ant-scroll-number',
-  count: null,
-  component: 'sup',
-  onAnimated: function() {},
-  height: 20
-};
-
-AntScrollNumber.propTypes = {
-  count: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number
-  ]),
-  component: React.PropTypes.string,
-  onAnimated: React.PropTypes.func,
-  height: React.PropTypes.number,
-};
-
-export default AntScrollNumber;

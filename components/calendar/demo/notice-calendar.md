@@ -1,10 +1,17 @@
-# 通知事项日历演示
-
-- order: 2
-
-一个复杂的应用实例。
-
 ---
+order: 2
+title:
+  zh-CN: 通知事项日历演示
+  en-US: A demo of Notice Calendar
+---
+
+## zh-CN
+
+一个复杂的应用示例。
+
+## en_US
+
+A complex application.
 
 ````jsx
 import { Calendar } from 'antd';
@@ -12,43 +19,46 @@ import { Calendar } from 'antd';
 function getListData(value) {
   let listData;
   switch (value.getDayOfMonth()) {
-  case 8:
-    listData = [
-      { type: 'warn', content: '这里是警告事项.' },
-      { type: 'normal', content: '这里是普通事项.' }
-    ]; break;
-  case 10:
-    listData = [
-      { type: 'warn', content: '这里是警告事项.' },
-      { type: 'normal', content: '这里是普通事项.' },
-      { type: 'error', content: '这里是错误事项.' }
-    ]; break;
-  case 15:
-    listData = [
-      { type: 'warn', content: '这里是警告事项.' },
-      { type: 'normal', content: '这里是普通事项好长啊。。....' },
-      { type: 'error', content: '这里是错误事项.' },
-      { type: 'error', content: '这里是错误事项.' },
-      { type: 'error', content: '这里是错误事项.' },
-      { type: 'error', content: '这里是错误事项.' }
-    ]; break;
-  default:
+    case 8:
+      listData = [
+        { type: 'warning', content: '这里是警告事项.' },
+        { type: 'normal', content: '这里是普通事项.' },
+      ]; break;
+    case 10:
+      listData = [
+        { type: 'warning', content: '这里是警告事项.' },
+        { type: 'normal', content: '这里是普通事项.' },
+        { type: 'error', content: '这里是错误事项.' },
+      ]; break;
+    case 15:
+      listData = [
+        { type: 'warning', content: '这里是警告事项.' },
+        { type: 'normal', content: '这里是普通事项好长啊。。....' },
+        { type: 'error', content: '这里是错误事项.' },
+        { type: 'error', content: '这里是错误事项.' },
+        { type: 'error', content: '这里是错误事项.' },
+        { type: 'error', content: '这里是错误事项.' },
+      ]; break;
+    default:
   }
   return listData || [];
 }
 
 function dateCellRender(value) {
   let listData = getListData(value);
-  return <ul className="events">
-    {listData.map((item, index) =>
-      <li key={index}>
-        <span className={`event-${item.type}`}>●</span>
-        {item.content}
-      </li>
-    )}
-  </ul>;
+  return (
+    <ul className="events">
+      {
+        listData.map((item, index) =>
+          <li key={index}>
+            <span className={`event-${item.type}`}>●</span>
+            {item.content}
+          </li>
+        )
+      }
+    </ul>
+  );
 }
-
 
 function getMonthData(value) {
   if (value.getMonth() === 8) {
@@ -66,9 +76,8 @@ function monthCellRender(value) {
 
 ReactDOM.render(
   <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
-, document.getElementById('components-calendar-demo-notice-calendar'));
+, mountNode);
 ````
-
 
 ````css
 .events {
@@ -94,7 +103,7 @@ ReactDOM.render(
   margin-right: 4px;
 }
 
-.event-warn {
+.event-warning {
   color: #fac450;
 }
 
@@ -103,7 +112,7 @@ ReactDOM.render(
 }
 
 .event-error {
-  color: #f60;
+  color: #f50;
 }
 
 .notes-month {

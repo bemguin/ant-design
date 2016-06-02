@@ -1,26 +1,27 @@
 import React from 'react';
-import Tree from 'rc-tree';
-import animation from '../common/openAnimation';
+import RcTree from 'rc-tree';
+import animation from '../_util/openAnimation';
 
-const AntTree = React.createClass({
-  getDefaultProps() {
-    return {
-      prefixCls: 'ant-tree',
-      checkable: false,
-      showIcon: false,
-    };
-  },
+export default class Tree extends React.Component {
+  static TreeNode = RcTree.TreeNode;
+
+  static defaultProps = {
+    prefixCls: 'ant-tree',
+    checkable: false,
+    showIcon: false,
+    openAnimation: animation,
+  }
+
   render() {
     const props = this.props;
     let checkable = props.checkable;
     if (checkable) {
       checkable = <span className={`${props.prefixCls}-checkbox-inner`}></span>;
     }
-    return <Tree openAnimation={animation} {...props} checkable={checkable}>
-      {this.props.children}
-    </Tree>;
+    return (
+      <RcTree {...props} checkable={checkable}>
+        {this.props.children}
+      </RcTree>
+    );
   }
-});
-
-AntTree.TreeNode = Tree.TreeNode;
-export default AntTree;
+}

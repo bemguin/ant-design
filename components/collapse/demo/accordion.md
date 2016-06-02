@@ -1,10 +1,9 @@
-# 手风琴
-
-- order: 1
+---
+order: 1
+title: 手风琴
+---
 
 手风琴，每次只打开一个tab。默认打开第一个。
-
----
 
 ````jsx
 import { Collapse } from 'antd';
@@ -18,15 +17,15 @@ const text = `
 
 ReactDOM.render(
   <Collapse accordion>
-    <Panel header={`This is panel header 1`} key="1">
+    <Panel header={'This is panel header 1'} key="1">
       <p>{text}</p>
     </Panel>
-    <Panel header={`This is panel header 2`} key="2">
+    <Panel header={'This is panel header 2'} key="2">
       <p>{text}</p>
     </Panel>
-    <Panel header={`This is panel header 3`} key="3">
+    <Panel header={'This is panel header 3'} key="3">
       <p>{text}</p>
     </Panel>
   </Collapse>
-, document.getElementById('components-collapse-demo-accordion'));
+, mountNode);
 ````

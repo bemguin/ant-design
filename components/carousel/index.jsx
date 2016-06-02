@@ -4,28 +4,26 @@ if (typeof window !== 'undefined') {
   const matchMediaPolyfill = function matchMediaPolyfill() {
     return {
       matches: false,
-      addListener: function () {
+      addListener() {
       },
-      removeListener: function () {
-      }
+      removeListener() {
+      },
     };
   };
   window.matchMedia = window.matchMedia || matchMediaPolyfill;
 }
 
-import Carousel from 'react-slick';
+import SlickCarousel from 'react-slick';
 import React from 'react';
-import assign from 'object-assign';
 
-const AntCarousel = React.createClass({
-  getDefaultProps() {
-    return {
-      dots: true,
-      arrows: false
-    };
-  },
+export default class Carousel extends React.Component {
+  static defaultProps = {
+    dots: true,
+    arrows: false,
+  }
+
   render() {
-    let props = assign({}, this.props);
+    let props = { ...this.props };
 
     if (props.effect === 'fade') {
       props.fade = true;
@@ -34,15 +32,13 @@ const AntCarousel = React.createClass({
 
     let className = 'ant-carousel';
     if (props.vertical) {
-      className = className + ' ant-carousel-vertical';
+      className = `${className} ant-carousel-vertical`;
     }
 
     return (
       <div className={className}>
-        <Carousel {...props} />
+        <SlickCarousel {...props} />
       </div>
     );
   }
-});
-
-export default AntCarousel;
+}

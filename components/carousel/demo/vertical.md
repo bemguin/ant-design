@@ -1,10 +1,9 @@
-# 垂直
-
-- order: 1
+---
+order: 1
+title: 垂直
+---
 
 垂直显示。
-
----
 
 ````jsx
 import { Carousel } from 'antd';
@@ -16,5 +15,5 @@ ReactDOM.render(
     <div><h3>3</h3></div>
     <div><h3>4</h3></div>
   </Carousel>
-, document.getElementById('components-carousel-demo-vertical'));
+, mountNode);
 ````

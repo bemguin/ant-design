@@ -1,22 +1,20 @@
-# 进度圈
-
-- order: 1
+---
+order: 1
+title: 进度圈
+---
 
 圈形的进度。
 
----
-
 ````jsx
-import { Progress, Icon } from 'antd';
-const ProgressCircle = Progress.Circle;
+import { Progress } from 'antd';
 
 ReactDOM.render(
   <div>
-    <ProgressCircle percent={30} />
-    <ProgressCircle percent={70} status="exception" format={<Icon type="exclamation" />} />
-    <ProgressCircle percent={100} />
+    <Progress type="circle" percent={75} />
+    <Progress type="circle" percent={70} status="exception" />
+    <Progress type="circle" percent={100} />
   </div>
-  , document.getElementById('components-progress-demo-circle'));
+  , mountNode);
 ````
 
 <style>
